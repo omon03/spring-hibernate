@@ -2,6 +2,7 @@ package hiber.dao;
 
 import hiber.model.User;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -24,8 +25,65 @@ public class UserDaoImp implements UserDao {
     @Override
     @SuppressWarnings("unchecked")
     public List<User> listUsers() {
-        TypedQuery<User> query=sessionFactory.getCurrentSession().createQuery("from User");
+        TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery("from User");
         return query.getResultList();
     }
 
+    @Override
+    public User getUserByCar(String model, int series) {
+        try {
+            String str = "SELECT user FROM User user WHERE user.car.series = :series AND user.car.model = :model";
+            TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery(str);
+            query.setParameter("model", model);
+            query.setParameter("series", series);
+            return query.getSingleResult();
+        } catch (Exception e) {
+            System.out.println("No result!\n" + e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public User getUser(long id) {
+        try {
+            String str = "SELECT user FROM User user WHERE user.id = :id";
+            Query<User> query = sessionFactory.getCurrentSession().createQuery(str);
+            query.setParameter("id", id);
+            return query.uniqueResult();
+        } catch (Exception e) {
+            System.out.println("Not found!\n" + e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public void getAllUserNames() {
+        try {
+            String str = "SELECT firstName FROM User";
+            TypedQuery<String> query = sessionFactory.getCurrentSession().createQuery(str);
+            query.getResultList().forEach(System.out::println);
+        } catch (Exception e) {
+            System.out.println("Not found!\n" + e.getMessage());
+        }
+    }
+
+    @Override
+    public void getAllUsersNamesAndID() {
+        final int POS_ID = 0;
+        final int POS_NAME = 1;
+        final int POS_LAST_NAME = 2;
+        try {
+            String str = "SELECT id, firstName, lastName FROM User";
+            Query query = sessionFactory.getCurrentSession().createQuery(str);
+            List<Object[]> list = query.getResultList();
+            for (Object[] object : list) {
+                Long id = (Long) object[POS_ID];
+                String firstName = (String) object[POS_NAME];
+                String lastName = (String) object[POS_LAST_NAME];
+                System.out.printf("id: %d, firstName: %s, lastName: %s", id, firstName, lastName);
+            }
+        } catch (Exception e) {
+            System.out.println("Not found!\n" + e.getMessage());
+        }
+    }
 }
