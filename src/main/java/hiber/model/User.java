@@ -95,13 +95,13 @@ public class User {
 
    @Override
    public String toString() {
-      String str = "User{id=" + id +
-                    ", firstName='" + firstName + '\'' +
-                    ", lastName='" + lastName + '\'' +
-                    ", email='" + email + '\'';
+      String str = "User{ id: " + id +
+                    ", firstName: '" + firstName + '\'' +
+                    ", lastName: '" + lastName + '\'' +
+                    ", email: '" + email + '\'';
       return (this.car == null)
-              ? str + '}'
-              : str + "car=" + car.toString() + '}';
+              ? str + " }"
+              : str + ", car: " + car + " }";
 
    }
 }

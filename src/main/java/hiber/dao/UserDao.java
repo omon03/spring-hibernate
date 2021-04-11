@@ -9,6 +9,6 @@ public interface UserDao {
     List<User> listUsers();
     User getUserByCar(String model, int series);
     User getUser(long id);
-    public void getAllUserNames();
-    public void getAllUsersNamesAndID();
+    void getAllUserNames();
+    void getAllUsersNamesAndID();
 }

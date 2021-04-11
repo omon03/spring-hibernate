@@ -23,14 +23,13 @@ public class MainApp {
 
         for (User user : users) {
             System.out.println(user.toString());
-            System.out.println();
         }
+        System.out.println();
 
-        userService.getUserFromDBbyCar("mazda", 1);
-        userService.getUser(1);
+        System.out.println(userService.getUserFromDBbyCar("mazda", 2));
+        System.out.println(userService.getUser(1));
         userService.getAllUserNames();
         userService.getAllUsersNamesAndID();
-        System.out.println(userService.getUserFromDBbyCar("mazda", 2));
 
         context.close();
     }

@@ -9,6 +9,6 @@ public interface UserService {
     List<User> listUsers();
     User getUserFromDBbyCar(String model, int series);
     User getUser(long id);
-    public void getAllUserNames();
-    public void getAllUsersNamesAndID();
+    void getAllUserNames();
+    void getAllUsersNamesAndID();
 }

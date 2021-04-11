@@ -32,6 +32,7 @@ public class UserDaoImp implements UserDao {
     @Override
     public User getUserByCar(String model, int series) {
         try {
+            System.out.println("\ngetUserByCar():");
             String str = "SELECT user FROM User user WHERE user.car.series = :series AND user.car.model = :model";
             TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery(str);
             query.setParameter("model", model);
@@ -46,6 +47,7 @@ public class UserDaoImp implements UserDao {
     @Override
     public User getUser(long id) {
         try {
+            System.out.println("\ngetUser():");
             String str = "SELECT user FROM User user WHERE user.id = :id";
             Query<User> query = sessionFactory.getCurrentSession().createQuery(str);
             query.setParameter("id", id);
@@ -59,6 +61,7 @@ public class UserDaoImp implements UserDao {
     @Override
     public void getAllUserNames() {
         try {
+            System.out.println("\ngetAllUserNames():");
             String str = "SELECT firstName FROM User";
             TypedQuery<String> query = sessionFactory.getCurrentSession().createQuery(str);
             query.getResultList().forEach(System.out::println);
@@ -73,6 +76,7 @@ public class UserDaoImp implements UserDao {
         final int POS_NAME = 1;
         final int POS_LAST_NAME = 2;
         try {
+            System.out.println("\ngetAllUsersNamesAndID():");
             String str = "SELECT id, firstName, lastName FROM User";
             Query query = sessionFactory.getCurrentSession().createQuery(str);
             List<Object[]> list = query.getResultList();
@@ -80,8 +84,9 @@ public class UserDaoImp implements UserDao {
                 Long id = (Long) object[POS_ID];
                 String firstName = (String) object[POS_NAME];
                 String lastName = (String) object[POS_LAST_NAME];
-                System.out.printf("id: %d, firstName: %s, lastName: %s", id, firstName, lastName);
+                System.out.printf("id: %d, firstName: %s, lastName: %s\n", id, firstName, lastName);
             }
+            System.out.println();
         } catch (Exception e) {
             System.out.println("Not found!\n" + e.getMessage());
         }
